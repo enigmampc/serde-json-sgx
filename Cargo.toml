@@ -16,10 +16,11 @@ travis-ci = { repository = "serde-rs/json" }
 appveyor = { repository = "serde-rs/json" }
 
 [dependencies]
-serde = "1.0.60"
-indexmap = { version = "1.0", optional = true }
-itoa = "0.4.3"
+serde = { git = "https://github.com/mesalock-linux/serde-sgx.git" }
+indexmap = { git = "https://github.com/mesalock-linux/indexmap-sgx.git", optional = true }
+itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git" }
 ryu = "0.2"
+sgx_tstd = { git = "https://github.com/baidu/rust-sgx-sdk.git", optional = true }
 
 [dev-dependencies]
 automod = "0.1"
@@ -39,7 +40,7 @@ features = ["raw_value"]
 ### FEATURES #################################################################
 
 [features]
-default = []
+default = ["mesalock_sgx"]
 
 # Use a different representation for the map type of serde_json::Value.
 # This allows data to be read into a Value and written back to a JSON string
@@ -63,3 +64,5 @@ raw_value = []
 # overflow the stack after deserialization has completed, including, but not
 # limited to, Display and Debug and Drop impls.
 unbounded_depth = []
+
+mesalock_sgx = ["sgx_tstd"]
