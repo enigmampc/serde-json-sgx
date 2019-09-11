@@ -18,7 +18,7 @@ appveyor = { repository = "serde-rs/json" }
 [dependencies]
 serde = { git = "https://github.com/mesalock-linux/serde-sgx.git", rev = "407aaaa2558dda5c2367d57ba40324c52cf9acc2"}
 indexmap = { git = "https://github.com/mesalock-linux/indexmap-sgx.git", optional = true }
-itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git" }
+itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git", rev = "4555d02b2072ce810d4928b189485d8b580b5098"}
 ryu = "0.2"
 sgx_tstd = { rev = "v1.0.8", git = "https://github.com/baidu/rust-sgx-sdk.git", optional = true }
 
