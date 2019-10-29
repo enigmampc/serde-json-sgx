@@ -1,6 +1,6 @@
 [package]
 name = "serde_json"
-version = "1.0.39" # remember to update html_root_url
+version = "1.0.40" # remember to update html_root_url
 authors = ["Erick Tryzelaar <erick.tryzelaar@gmail.com>", "David Tolnay <dtolnay@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "A JSON serialization file format"
@@ -10,25 +10,29 @@ keywords = ["json", "serde", "serialization"]
 categories = ["encoding"]
 readme = "README.md"
 include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-APACHE", "LICENSE-MIT"]
+exclude = ["/sgx/*"]
 
 [badges]
 travis-ci = { repository = "serde-rs/json" }
 appveyor = { repository = "serde-rs/json" }
 
 [dependencies]
-serde = { git = "https://github.com/mesalock-linux/serde-sgx.git", rev = "bc160eaaa364448e0831c6fbfc9c77cbf59f09db"}
-indexmap = { git = "https://github.com/mesalock-linux/indexmap-sgx.git", optional = true, rev="sgx_1.0.9" }
-itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git", rev = "sgx_1.0.9"}
-ryu = "0.2"
-sgx_tstd = { git = "https://github.com/baidu/rust-sgx-sdk.git", rev = "v1.0.9", optional = true }
+serde = { git = "https://github.com/mesalock-linux/serde-sgx.git" }
+indexmap = { git = "https://github.com/mesalock-linux/indexmap-sgx.git", optional = true }
+itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git" }
+ryu = "1.0"
+sgx_tstd = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk.git", optional = true }
 
 [dev-dependencies]
 automod = "0.1"
-select-rustc = "0.1"
+rustversion = "0.1"
 serde_bytes = "0.11"
 serde_derive = "1.0"
 serde_stacker = "0.1"
 trybuild = "1.0"
+
+#[workspace]
+#members = ["tests/crate"]
 
 [package.metadata.docs.rs]
 features = ["raw_value", "unbounded_depth"]
