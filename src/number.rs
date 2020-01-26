@@ -238,7 +238,7 @@ impl Number {
                 }
                 #[cfg(feature = "arbitrary_precision")]
                 {
-                    ryu::Buffer::new().format(f).to_owned()
+                    ryu::Buffer::new().format_finite(f).to_owned()
                 }
             };
             Some(Number { n: n })
@@ -435,7 +435,7 @@ impl<'de> de::Deserialize<'de> for NumberFromString {
             where
                 E: de::Error,
             {
-                let n = try!(s.parse().map_err(de::Error::custom));
+                let n = s.parse().map_err(de::Error::custom)?;
                 Ok(NumberFromString { value: n })
             }
         }
@@ -474,7 +474,7 @@ macro_rules! deserialize_any {
             } else if let Some(i) = self.as_i64() {
                 return visitor.visit_i64(i);
             } else if let Some(f) = self.as_f64() {
-                if ryu::Buffer::new().format(f) == self.n || f.to_string() == self.n {
+                if ryu::Buffer::new().format_finite(f) == self.n || f.to_string() == self.n {
                     return visitor.visit_f64(f);
                 }
             }

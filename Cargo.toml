@@ -1,6 +1,6 @@
 [package]
 name = "serde_json"
-version = "1.0.39" # remember to update html_root_url
+version = "1.0.40" # remember to update html_root_url
 authors = ["Erick Tryzelaar <erick.tryzelaar@gmail.com>", "David Tolnay <dtolnay@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "A JSON serialization file format"
@@ -10,6 +10,7 @@ keywords = ["json", "serde", "serialization"]
 categories = ["encoding"]
 readme = "README.md"
 include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE-APACHE", "LICENSE-MIT"]
+exclude = ["/sgx/*"]
 
 [badges]
 travis-ci = { repository = "serde-rs/json" }
@@ -19,16 +20,19 @@ appveyor = { repository = "serde-rs/json" }
 serde = { git = "https://github.com/mesalock-linux/serde-sgx.git" }
 indexmap = { git = "https://github.com/mesalock-linux/indexmap-sgx.git", optional = true }
 itoa = { git = "https://github.com/mesalock-linux/itoa-sgx.git" }
-ryu = "0.2"
-sgx_tstd = { rev = "v1.0.8", git = "https://github.com/baidu/rust-sgx-sdk.git", optional = true }
+ryu = "1.0"
+sgx_tstd = { rev = "v1.1.0", git = "https://github.com/apache/teaclave-sgx-sdk.git", optional = true }
 
 [dev-dependencies]
-automod = "0.1"
-select-rustc = "0.1"
-serde_bytes = "0.11"
-serde_derive = "1.0"
-serde_stacker = "0.1"
-trybuild = "1.0"
+#automod = "0.1"
+#rustversion = "0.1"
+#serde_bytes = "0.11"
+#serde_derive = "1.0"
+#serde_stacker = "0.1"
+#trybuild = "1.0"
+
+#[workspace]
+#members = ["tests/crate"]
 
 [package.metadata.docs.rs]
 features = ["raw_value", "unbounded_depth"]

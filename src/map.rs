@@ -127,7 +127,10 @@ impl Map<String, Value> {
         String: Borrow<Q>,
         Q: Ord + Eq + Hash,
     {
-        self.map.remove(key)
+        #[cfg(feature = "preserve_order")]
+        return self.map.swap_remove(key);
+        #[cfg(not(feature = "preserve_order"))]
+        return self.map.remove(key);
     }
 
     /// Gets the given key's corresponding entry in the map for in-place
@@ -297,10 +300,10 @@ impl ser::Serialize for Map<String, Value> {
         S: ser::Serializer,
     {
         use serde::ser::SerializeMap;
-        let mut map = try!(serializer.serialize_map(Some(self.len())));
+        let mut map = serializer.serialize_map(Some(self.len()))?;
         for (k, v) in self {
-            try!(map.serialize_key(k));
-            try!(map.serialize_value(v));
+            map.serialize_key(k)?;
+            map.serialize_value(v)?;
         }
         map.end()
     }
@@ -336,7 +339,7 @@ impl<'de> de::Deserialize<'de> for Map<String, Value> {
             {
                 let mut values = Map::new();
 
-                while let Some((key, value)) = try!(visitor.next_entry()) {
+                while let Some((key, value)) = visitor.next_entry()? {
                     values.insert(key, value);
                 }
 
@@ -693,7 +696,10 @@ impl<'a> OccupiedEntry<'a> {
     /// ```
     #[inline]
     pub fn remove(self) -> Value {
-        self.occupied.remove()
+        #[cfg(feature = "preserve_order")]
+        return self.occupied.swap_remove();
+        #[cfg(not(feature = "preserve_order"))]
+        return self.occupied.remove();
     }
 }
 
